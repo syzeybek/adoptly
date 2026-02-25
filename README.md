@@ -4,7 +4,7 @@
 
 ## Proje Hakkında
 
-![Ürün Tanıtım Görseli](adoptly.png)
+![Ürün Tanıtım Görseli](<img width="2000" height="1000" alt="Image" src="https://github.com/user-attachments/assets/c676ba97-7c5d-45d0-b57b-92dd245704bc" />)
 
 **Proje Tanımı:** 
 Adoptly, kalplerini açmaya hazır aileler ile yuva bekleyen minik dostlarımızı sevgi dolu bir köprüde buluşturur. Her canlının sıcak bir yuvayı hak ettiği inancıyla yola çıkan bu platform, barınaklardaki kedi ve köpeklerin sesini daha gür duyurmalarına, hayvanseverlerin ise hayallerindeki yol arkadaşına zahmetsizce ulaşmalarına yardımcı olur. Bir canı sahiplenme sürecini karmaşadan uzak, güvenli ve sevgi odaklı bir yolculuğa dönüştüren Adoptly, sokaktaki masum gözlerin sıcak bir aileye kavuştuğu o ilk ana ortak olmayı hedefler.
