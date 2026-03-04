@@ -1,0 +1,262 @@
+openapi: 3.0.3
+info:
+  title: Adoptly - Pet Sahiplendirme ve Barınak Yönetim API'si
+  version: 1.0.0
+  description: >
+    Bu API, barınaklardaki hayvanların dijital ilanlarının yönetilmesi ve kullanıcıların
+    sahiplenme başvurularını takip edebilmesi için tasarlanmış bir RESTful servistir.
+    İlanlar tür, şehir ve yaşa göre filtrelenebilir. Sistem, JWT tabanlı kimlik doğrulama
+    ile korunmaktadır ve rol bazlı (Kullanıcı/Barınak) yetkilendirme destekler.
+  contact:
+    name: Adoptly Labs - Yiğit Zeybek
+    email: support@adoptly.com
+
+servers:
+  - url: https://api.adoptly.com/v1
+    description: Üretim sunucusu (Production)
+  - url: http://localhost:8080/v1
+    description: Yerel geliştirme sunucusu (Development - Spring Boot)
+
+tags:
+  - name: Kimlik Doğrulama
+    description: Üye olma ve giriş işlemleri
+  - name: Hayvan İlanları
+    description: Hayvan ilanlarını oluşturma, listeleme, güncelleme ve silme işlemleri
+  - name: Sahiplendirme Başvuruları
+    description: Kullanıcıların yaptığı başvuruların yönetimi ve takibi
+
+security:
+  - BearerAuth: []
+
+paths:
+  # --- AUTH ---
+  /api/auth/register:
+    post:
+      tags:
+        - Kimlik Doğrulama
+      summary: Üye Ol
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        "201":
+          description: Kullanıcı başarıyla oluşturuldu
+        "400":
+          description: Geçersiz veri girişi
+
+  /api/auth/login:
+    post:
+      tags:
+        - Kimlik Doğrulama
+      summary: Giriş Yap
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginCredentials'
+      responses:
+        "200":
+          description: Giriş başarılı, JWT döndürüldü
+        "401":
+          description: Hatalı e-posta veya şifre
+
+  # --- ANIMALS ---
+  /api/animals:
+    get:
+      tags:
+        - Hayvan İlanları
+      summary: Tüm Hayvanları Listele
+      operationId: listAnimals
+      responses:
+        "200":
+          description: İlanlar başarıyla listelendi
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Animal'
+
+    post:
+      tags:
+        - Hayvan İlanları
+      summary: Yeni İlan Oluştur (Sadece Barınak)
+      operationId: addAnimal
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimalInput'
+      responses:
+        "201":
+          description: İlan başarıyla oluşturuldu
+        "403":
+          description: Bu işlem için barınak yetkisi gerekir
+
+  /api/animals/{animalId}:
+    parameters:
+      - name: animalId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: "pet-789"
+
+    get:
+      tags:
+        - Hayvan İlanları
+      summary: İlan Detayı Getir
+      operationId: getAnimalById
+      responses:
+        "200":
+          description: İlan detayları başarıyla getirildi
+        "404":
+          description: İlan bulunamadı
+
+    put:
+      tags:
+        - Hayvan İlanları
+      summary: İlan Bilgilerini Güncelle
+      operationId: updateAnimal
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnimalInput'
+      responses:
+        "200":
+          description: İlan başarıyla güncellendi
+
+    delete:
+      tags:
+        - Hayvan İlanları
+      summary: İlanı Sil
+      operationId: deleteAnimal
+      security:
+        - BearerAuth: []
+      responses:
+        "204":
+          description: İlan başarıyla silindi
+
+  /api/animals/search:
+    get:
+      tags:
+        - Hayvan İlanları
+      summary: Filtreli Hayvan Arama
+      operationId: searchAnimals
+      parameters:
+        - name: species
+          in: query
+          schema:
+            type: string
+            enum: [Cat, Dog]
+        - name: city
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Filtrelenmiş sonuçlar listelendi
+
+  # --- APPLICATIONS ---
+  /api/applications:
+    post:
+      tags:
+        - Sahiplendirme Başvuruları
+      summary: Sahiplenme Başvurusu Yap
+      operationId: submitApplication
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationInput'
+      responses:
+        "201":
+          description: Başvuru başarıyla alındı
+
+  /api/applications/my:
+    get:
+      tags:
+        - Sahiplendirme Başvuruları
+      summary: Başvurularımı Listele
+      operationId: listMyApplications
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Kullanıcının başvuruları başarıyla getirildi
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'JWT tabanlı kimlik doğrulama. Örnek: "Bearer <token>"'
+
+  schemas:
+    UserRegistration:
+      type: object
+      required: [firstName, lastName, email, password]
+      properties:
+        firstName: { type: string, example: "Yiğit" }
+        lastName: { type: string, example: "Zeybek" }
+        email: { type: string, format: email, example: "yigit@adoptly.com" }
+        password: { type: string, format: password, example: "Pass1234!" }
+
+    LoginCredentials:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email, example: "yigit@adoptly.com" }
+        password: { type: string, format: password, example: "Pass1234!" }
+
+    Animal:
+      type: object
+      properties:
+        id: { type: string, example: "pet-789" }
+        name: { type: string, example: "Pamuk" }
+        species: { type: string, enum: [Cat, Dog], example: "Cat" }
+        age: { type: integer, example: 2 }
+        gender: { type: string, enum: [Male, Female], example: "Female" }
+        status: { type: string, enum: [AVAILABLE, ADOPTED], example: "AVAILABLE" }
+        imageUrl: { type: string, example: "https://images.com/pamuk.jpg" }
+
+    AnimalInput:
+      type: object
+      required: [name, species, age, gender]
+      properties:
+        name: { type: string, example: "Pamuk" }
+        species: { type: string, enum: [Cat, Dog] }
+        age: { type: integer, example: 2 }
+        gender: { type: string, enum: [Male, Female] }
+        description: { type: string, example: "Çok oyuncu ve sıcakkanlı." }
+        imageUrl: { type: string }
+
+    ApplicationInput:
+      type: object
+      required: [animalId, message]
+      properties:
+        animalId: { type: string, example: "pet-789" }
+        message: { type: string, example: "Ona çok iyi bir yuva olacağım." }
+
+    Error:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string, example: "Hayvan ilanı bulunamadı." }
