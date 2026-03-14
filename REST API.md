@@ -1,6 +1,6 @@
 # REST API Metotları
 
-**REST API Adresi:** https://api.adoptly.com/v1
+**REST API Adresi:** 
 
 **API Test Videosu:** [Link buraya eklenecek](https://example.com)
 
