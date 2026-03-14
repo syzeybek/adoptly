@@ -6,28 +6,31 @@
 
 
 ---
+---
 
-## 1. Üye Olma
+# 🐾 Adoptly REST API Gereksinimleri
 
-* **Endpoint:** `POST /auth/register`
-* **Request Body:**
+### 1. Kullanıcı Kaydı (Register)
+
+* **Uç nokta:** `POST /api/v1/auth/register`
+* **İstek Metni:**
+
 ```json
 {
   "email": "yigit@adoptly.com",
   "password": "Guvenli123!",
-  "firstName": "Yiğit",
-  "lastName": "Zeybek"
+  "firstName": "Yiğit"
 }
 
 ```
 
+* **Yanıt:** `201 Created` - Kullanıcı başarıyla tamamlandı
 
-* **Response:** `201 Created` - Kullanıcı başarıyla oluşturuldu
+### 2. Kullanıcı Girişi (Login)
 
-## 2. Giriş Yapma
+* **Uç nokta:** `POST /api/v1/auth/login`
+* **İstek Metni:**
 
-* **Endpoint:** `POST /auth/login`
-* **Request Body:**
 ```json
 {
   "email": "yigit@adoptly.com",
@@ -36,123 +39,84 @@
 
 ```
 
+* **Yanıt:** `200 OK` - Giriş Başarılı (Token döner)
 
-* **Response:** `200 OK` - Giriş başarılı, JWT token döndürüldü
+### 3. Tüm İlanları Listeleme
 
-## 3. Hayvan İlanı Oluşturma
+* **Uç nokta:** `GET /api/v1/animals`
+* **Yanıt:** `200 OK` - Tüm hayvan ilanları başarıyla listelendi
 
-* **Endpoint:** `POST /animals`
-* **Authentication:** Bearer Token gerekli
-* **Request Body:**
+### 4. Yeni Hayvan İlanı Oluşturma
+
+* **Uç nokta:** `POST /api/v1/animals`
+* **İstek Metni:**
+
 ```json
 {
-  "name": "Pamuk",
-  "species": "Kedi",
-  "age": 2,
-  "gender": "Dişi",
-  "description": "Çok oyuncu ve sıcakkanlı bir kedi.",
-  "imageUrl": "https://api.adoptly.com/images/pamuk.jpg"
+  "name": "Fındık",
+  "species": "Kuş",
+  "age": 1,
+  "gender": "Erkek",
+  "city": "Ankara"
 }
 
 ```
 
+* **Yanıt:** `201 Created` - İlan başarıyla oluşturuldu
 
-* **Response:** `201 Created` - İlan başarıyla oluşturuldu
+### 5. İlan Detaylarını Görüntüleme
 
-## 4. İlanları Listeleme
+* **Uç nokta:** `GET /api/v1/animals/{id}`
+* **Yol Parametreleri:** `id` (Hayvan ID'si)
+* **Yanıt:** `200 OK` - İlan detayları başarıyla getirildi
 
-* **Endpoint:** `GET /animals`
-* **Response:** `200 OK` - Tüm sahiplendirilebilir hayvanlar başarıyla listelendi
+### 6. İlan Bilgilerini Güncelleme
 
-## 5. İlan Detaylarını Görüntüleme
+* **Uç nokta:** `PUT /api/v1/animals/{id}`
+* **İstek Metni:**
 
-* **Endpoint:** `GET /animals/{animalId}`
-* **Path Parameters:**
-* `animalId` (string, required) - Hayvanın benzersiz kimlik numarası
-
-
-* **Response:** `200 OK` - Hayvanın detaylı bilgileri başarıyla getirildi
-
-## 6. İlan Bilgilerini Güncelleme
-
-* **Endpoint:** `PUT /animals/{animalId}`
-* **Path Parameters:**
-* `animalId` (string, required) - Hayvanın benzersiz kimlik numarası
-
-
-* **Authentication:** Bearer Token gerekli
-* **Request Body:**
 ```json
 {
   "age": 3,
-  "description": "Yeni fotoğraflar eklendi, sağlığı çok iyi.",
-  "status": "ADOPTED"
+  "name": "Pamuk (Güncellendi)"
 }
 
 ```
 
+* **Yanıt:** `200 OK` - İlan başarıyla güncellendi
 
-* **Response:** `200 OK` - İlan bilgileri başarıyla güncellendi
+### 7. Hayvan Filtreleme ve Arama
 
-## 7. İlan Kaldırma (Silme)
+* **Uç nokta:** `GET /api/v1/animals/search`
+* **Sorgu Parametreleri:** `species` (string), `city` (string)
+* **Yanıt:** `200 OK` - Arama sonuçları başarıyla listelendi
 
-* **Endpoint:** `DELETE /animals/{animalId}`
-* **Path Parameters:**
-* `animalId` (string, required) - Hayvanın benzersiz kimlik numarası
+### 8. Sahiplenme Başvurusu Yapma
 
+* **Uç nokta:** `POST /api/v1/applications`
+* **İstek Metni:**
 
-* **Authentication:** Bearer Token gerekli
-* **Response:** `204 No Content` - İlan başarıyla silindi
-
-## 8. Sahiplenme Başvurusu Yapma
-
-* **Endpoint:** `POST /applications`
-* **Authentication:** Bearer Token gerekli
-* **Request Body:**
 ```json
 {
-  "animalId": "animal-uuid-123",
-  "message": "Bahçeli bir evim var, bu cana en iyi şekilde bakmak istiyorum."
+  "animalId": "1",
+  "note": "Ona çok iyi bakacağım!"
 }
 
 ```
 
+* **Yanıt:** `201 Created` - Başvuru başarıyla alındı
 
-* **Response:** `201 Created` - Başvuru talebi başarıyla oluşturuldu
+### 9. Başvurularımı Listeleme
 
-## 9. Başvuruları Listeleme
+* **Uç nokta:** `GET /api/v1/applications/my`
+* **Yanıt:** `200 OK` - Yapılan başvurular başarıyla listelendi
 
-* **Endpoint:** `GET /applications/my`
-* **Authentication:** Bearer Token gerekli
-* **Response:** `200 OK` - Kullanıcının geçmiş ve güncel başvuruları listelendi
+### 10. İlan Kaldırma / Silme
 
-## 10. Hayvan Filtreleme ve Arama
-
-* **Endpoint:** `GET /animals/search`
-* **Query Parameters:**
-* `species` (string) - Kedi veya Köpek seçimi
-* `city` (string) - İlanın bulunduğu şehir
-
-
-* **Response:** `200 OK` - Belirlenen kriterlere uygun sonuçlar başarıyla getirildi
+* **Uç nokta:** `DELETE /api/v1/animals/{id}`
+* **Yanıt:** `204 No Content` - İlan başarıyla silindi
 
 ---
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Response: 200 OK - Belirlenen kriterlere uygun sonuçlar başarıyla getirildi
