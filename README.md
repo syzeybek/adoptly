@@ -1,5 +1,5 @@
 
-```
+
 # Adoptly
 
 
@@ -26,7 +26,7 @@ Sosyal Sorumluluk ve Yardımlaşma
 ## Proje Linkleri
 
 - **REST API Adresi:**
-- **Web Frontend Adresi:** 
+- **Web Frontend Adresi:** (https://adoptly-liard.vercel.app/)
 ---
 
 ## Proje Ekibi
