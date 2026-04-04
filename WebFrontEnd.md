@@ -8,8 +8,7 @@ Bu dokümanda, web uygulamasının kullanıcı arayüzü (UI) ve kullanıcı den
 
 ## Genel Web Frontend Prensipleri
 
-🐾 Adoptly: Frontend Geliştirme Prensipleri ve Teknik Standartlar
-Bu döküman, Adoptly platformunun sürdürülebilirliği, performansı ve kullanıcı deneyimi için uygulanan teknik mimariyi ve standartları tanımlar.
+
 
 1. Responsive Tasarım
 Mobile-First Approach: Tasarım süreci önce mobil cihazlar için optimize edilmiş, ardından md ve lg breakpointleri ile masaüstü görünüme genişletilmiştir.
