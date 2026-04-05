@@ -25,8 +25,8 @@ Sosyal Sorumluluk ve Yardımlaşma
 
 ## Proje Linkleri
 
-- **REST API Adresi:**
-- **Web Frontend Adresi:** (https://adoptly-liard.vercel.app/)
+- **REST API Adresi:**  https://adoptly-backend-wap7.onrender.com/
+- **Web Frontend Adresi:** https://adoptly-liard.vercel.app/
 ---
 
 ## Proje Ekibi
