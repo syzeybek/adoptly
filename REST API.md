@@ -1,6 +1,6 @@
 # REST API Metotları
 
-**REST API Adresi:** 
+**REST API Adresi:** https://adoptly-backend-wap7.onrender.com
 
 **API Test Videosu:** [Link buraya eklenecek](https://example.com)
 
