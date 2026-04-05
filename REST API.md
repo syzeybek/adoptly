@@ -2,7 +2,7 @@
 
 **REST API Adresi:** https://adoptly-backend-wap7.onrender.com
 
-**API Test Videosu:** [Link buraya eklenecek](https://example.com)
+**API Test Videosu:** https://youtu.be/abLBekQ3Eho
 
 
 
