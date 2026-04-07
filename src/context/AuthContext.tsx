@@ -1,7 +1,7 @@
-// ✨ ÇÖZÜM BURADA: ReactNode'un başına "type" kelimesini ekledik
+
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { supabase } from '../lib/supabase';
-// ✨ ÇÖZÜM BURADA: User'ın bir tip olduğunu açıkça belirttik
+
 import type { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
