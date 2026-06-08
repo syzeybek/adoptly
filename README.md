@@ -47,7 +47,7 @@ Proje dokümantasyonuna aşağıdaki linklerden erişebilirsiniz:
 2. [REST API Tasarımı](API-Tasarimi.md)
 3. [REST API](Rest-API.md)
 4. [Web Front-End](WebFrontEnd.md)
-5. [Mobil Front-End](adoptly-mobileREADME.md)
+5. [Mobil Front-End](MobileFront-End.md)
 6. [Mobil Backend](MobilBackEnd.md)
 7. [Video Sunum](Sunum.md)
 
