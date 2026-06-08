@@ -1,5 +1,7 @@
  Mobil Backend Görevleri
 
+**Rest API Adresi:** https://adoptly-mobilbackend.onrender.com/api/animals
+
 **Mobil Front-end ile Back-end Bağlanmış Test Videosu:** [Link buraya eklenecek](https://example.com)
 
 ## 1. Hayvan İlanı Oluşturma Servisi
