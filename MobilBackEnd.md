@@ -1,6 +1,6 @@
  Mobil Backend Görevleri
 
-**Rest API Adresi:** https://adoptly-mobilbackend.onrender.com/api/animals
+**Rest API Adresi:** https://adoptly-mobilbackend.onrender.com/api
 
 **Mobil Front-end ile Back-end Bağlanmış Test Videosu:** [Link buraya eklenecek](https://example.com)
 
